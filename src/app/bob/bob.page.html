@@ -1,0 +1,113 @@
+<ion-content [class.bosque-enojado]="modoEnojada" class="fondo-dinamico">
+
+  <div class="area-burbujas">
+    <div class="burbuja" *ngFor="let i of [1,2,3,4,5,6]"></div>
+  </div>
+
+  <div style="position: relative; z-index: 10; min-height: 100vh; padding: 40px 20px; display: flex; flex-direction: column; align-items: center;">
+
+    <div style="text-align: center; margin-bottom: 30px; width: 100%; user-select: none;"
+         (mousedown)="iniciarPresion()" (mouseup)="terminarPresion()" (mouseleave)="terminarPresion()"
+         (touchstart)="iniciarPresion()" (touchend)="terminarPresion()">
+      
+      <h1 style="color: #ffeb3b; font-family: 'Impact', sans-serif; letter-spacing: 1px; font-size: 2.2rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); margin: 0; cursor: pointer;">
+        {{ modoEnojada ? '¡LA CARACOLA EXPLOTÓ!' : 'LA CARACOLA MÁGICA' }}
+      </h1>
+      <p class="instruccion" style="margin-top: 10px;">
+        {{ animando ? 'La caracola está escuchando el cosmos...' : 'Manten presionado el título para ver tus estadísticas' }}
+      </p>
+    </div>
+
+    <ion-button fill="clear" (click)="cambiarPersonalidad()" class="btn-personalidad">
+      <ion-icon slot="start" name="color-wand-outline"></ion-icon>
+      Modo: {{ nombresPersonalidad[personalidadActual] }}
+    </ion-button>
+
+    <div 
+      class="imagen-caracola" 
+      [class.vibrando]="animando && !modoEnojada" 
+      [class.caracola-enojada]="modoEnojada"
+      (click)="procesarToque()"
+      style="font-size: 110px; user-select: none; min-height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
+      {{ modoEnojada ? '💥🐚💥' : '🐚' }}
+    </div>
+
+    <div style="width: 100%; max-width: 500px; margin-bottom: 30px;">
+      <mat-form-field appearance="outline" style="width: 100%;" class="custom-material-input">
+        <mat-label style="color: #a4e0c4;">Haz tu pregunta existencial</mat-label>
+        <input 
+          matInput 
+          [(ngModel)]="preguntaUsuario"
+          placeholder="Ej. ¿Juanpa sabe de redes?" 
+          [disabled]="animando || escuchando">
+        
+        <button mat-icon-button matSuffix (click)="iniciarDictado()" [disabled]="animando" [class.mic-activo]="escuchando">
+          <ion-icon [name]="escuchando ? 'mic' : 'mic-outline'" style="color: #ffeb3b; font-size: 24px;"></ion-icon>
+        </button>
+
+        <mat-hint style="color: rgba(255, 255, 255, 0.6);">
+          {{ escuchando ? 'Te estoy escuchando...' : 'Escribe o presiona el micrófono' }}
+        </mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div style="width: 100%; max-width: 500px; margin-bottom: 40px;">
+      <button 
+        mat-raised-button 
+        class="boton-magico"
+        [color]="modoEnojada ? 'warn' : 'primary'"
+        (click)="procesarToque()"
+        [disabled]="animando && !modoEnojada"
+        style="width: 100%; height: 55px; font-size: 1.1rem; letter-spacing: 0.5px; border-radius: 25px;">
+        {{ animando ? 'CONVULSIONANDO...' : '🔮 TIRAR DE LA CUERDA' }}
+      </button>
+    </div>
+
+    <div class="cuadro-respuesta" [class.cuadro-enojado]="modoEnojada" style="width: 100%; max-width: 500px; margin-bottom: 40px; text-align: center;">
+      <h2>{{ respuesta }}</h2>
+    </div>
+
+    <div class="historial-container" *ngIf="historial.length > 0" style="width: 100%; max-width: 500px; margin: 0 auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Últimas profecías</h3>
+        <ion-button size="small" fill="clear" color="light" (click)="borrarHistorial()" style="font-size: 0.8rem;">
+          Limpiar
+        </ion-button>
+      </div>
+      
+      <ion-list class="lista-transparente">
+        <ion-item class="item-transparente" *ngFor="let item of historial">
+          <ion-icon name="star-outline" slot="start"></ion-icon>
+          <ion-label>"{{ item }}"</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <div class="dashboard-overlay" *ngIf="mostrarAnaliticas">
+    <div class="dashboard-card">
+      <h2 style="font-family: 'Impact'; color: #ffeb3b; text-align: center;">📊 ANALÍTICAS MÍSTICAS</h2>
+      <p style="text-align: center; color: #a4e0c4;">Has jalado la cuerda <b>{{ estadisticas.total }}</b> veces</p>
+      
+      <div class="stats-grid mt-4">
+        <div class="stat-box">
+          <h1 style="color: #4CAF50;">{{ estadisticas.si }}</h1>
+          <p>Positivas</p>
+        </div>
+        <div class="stat-box">
+          <h1 style="color: #F44336;">{{ estadisticas.no }}</h1>
+          <p>Negativas</p>
+        </div>
+        <div class="stat-box">
+          <h1 style="color: #FFC107;">{{ estadisticas.neutro }}</h1>
+          <p>Neutras</p>
+        </div>
+      </div>
+
+      <ion-button expand="block" color="danger" class="mt-4" (click)="mostrarAnaliticas = false">
+        Cerrar Registro
+      </ion-button>
+    </div>
+  </div>
+
+</ion-content>

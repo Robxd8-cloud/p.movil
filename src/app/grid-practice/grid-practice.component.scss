@@ -1,0 +1,90 @@
+.app-container {
+  font-family: Arial, sans-serif;
+  background-color: #d1e8e2;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #b5d8d1;
+  padding: 15px 30px;
+  border-bottom: 1px solid #9cbdb6;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 22px;
+  color: #2c5d54;
+  font-weight: normal;
+}
+
+.main-content {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.title {
+  font-size: 28px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  color: #2c5d54;
+}
+
+.user-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto; 
+  align-items: center; 
+  
+  background-color: #5a717b;
+  padding: 20px 30px;
+  border-radius: 10px;
+  max-width: 650px;
+  margin: 0 auto;
+  color: white;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #ccc;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.name {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.handle {
+  font-size: 14px;
+  color: #b0bec5;
+}
+
+.follow-btn {
+  color: #a7ffeb;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.follow-btn:hover {
+  text-decoration: underline;
+}
+
+.bottom-section {
+  margin-top: 60px;
+  text-align: left;
+  max-width: 650px;
+  margin: 60px auto 0 auto;
+}
